@@ -14,6 +14,8 @@ class Dictionary
     dictionary[random_int]
   end
 
+  private
+
   def line_chomp
     dictionary.map!(&:chomp)
   end
