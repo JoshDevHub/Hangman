@@ -11,15 +11,19 @@ class Game
   # If the player guesses the word before they've used all 6 guesses, they win
   # Else the player loses -- Have complete word displayed to them in this event.
   attr_reader :word, :encoded_word, :display
+  attr_accessor :round
 
   # TODO: inject class dependencies in main?
   def initialize
     @word = Dictionary.new.select_word
     @encoded_word = encode_word
     @display = Display.new
+    @round = 0
   end
 
+  # TODO: Break this down extensively
   def game_loop
+    # TODO: Compose this in Display class
     display.welcome
     display.rules
     loop do
@@ -27,7 +31,17 @@ class Game
       display.display_secret_word(encoded_word)
       guess_letter = gets_user_input
       reveal_letter(guess_letter)
+      increment_round
+      if complete_word?
+        # Run Winner Method
+        break
+
+      end
     end
+  end
+
+  def increment_round
+    self.round += 1
   end
 
   def gets_user_input
@@ -52,12 +66,12 @@ class Game
   # TODO: might not have to mutate here?
   def reveal_letter(letter)
     encoded_word.map!.with_index do |element, index|
-      if letter == word[index]
-        letter
-      else
-        element
-      end
+      letter == word[index] ? letter : element
     end
+  end
+
+  def complete_word?
+    encoded_word.join == word
   end
 end
 
