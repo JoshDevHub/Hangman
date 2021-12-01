@@ -20,8 +20,29 @@ class Game
   end
 
   def game_loop
-    # Welcome player to the game
     display.welcome
+    display.rules
+    loop do
+      display.query_letter
+      display.display_secret_word(encoded_word)
+      guess_letter = gets_user_input
+      reveal_letter(guess_letter)
+    end
+  end
+
+  def gets_user_input
+    input = gets.chomp.downcase
+    return input if valid_letter_input?(input)
+
+    until valid_letter_input?(input)
+      puts "Please only input one letter 'A' to 'Z'."
+      input = gets.chomp.downcase
+    end
+    input
+  end
+
+  def valid_letter_input?(input)
+    input.length == 1 && [*'a'..'z'].include?(input)
   end
 
   def encode_word
@@ -41,4 +62,4 @@ class Game
 end
 
 # method tests
-my_game = Game.new
+my_game = Game.new.game_loop
