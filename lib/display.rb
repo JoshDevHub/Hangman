@@ -2,26 +2,30 @@
 
 # Display Class that holds methods for outputting information in the CLI
 class Display
-  # Pseudo
-  # Welcome player to the game
   def welcome
-    puts 'Welcome to a game of Hangman'
+    'Welcome to a game of Hangman'
   end
 
   def rules
-    puts <<~HEREDOC
-      You have 6 tries to guess the secret word.
-      Pick your letters wisely!
+    <<~HEREDOC
+      A secret word will be generated, and you play by guessing letters in an
+      attempt to reveal the word. When you guess letters that are in the hidden
+      word, the location of these letters within the word will be revealed to you.
+      Use this information to help you guess the full word!
+      You only have 6 incorrect guesses to spend. Pick your letters wisely!
     HEREDOC
   end
 
-  def query_letter
-    puts 'Choose a letter to guess '
+  def game_message(message)
+    {
+      introduction: "#{welcome}\n\n#{rules}",
+      query_letter: 'Choose a letter to guess ',
+      correct_letter: 'Your guess was correct!',
+      incorrect_letter: 'Your guess was incorrect :('
+    }[message]
   end
 
   def display_secret_word(word)
-    puts word.join(' ')
+    word.join(' ')
   end
 end
-
-Display.new.rules
