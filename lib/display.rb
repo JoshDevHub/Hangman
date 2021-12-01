@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Display Class that holds methods for outputting information in the CLI
-class Display
+# Display module that holds methods for outputting text in the CLI
+module Display
   def welcome
     'Welcome to a game of Hangman'
   end
@@ -21,7 +21,8 @@ class Display
       introduction: "#{welcome}\n\n#{rules}",
       query_letter: 'Choose a letter to guess ',
       correct_letter: 'Your guess was correct!',
-      incorrect_letter: 'Your guess was incorrect :('
+      incorrect_letter: 'Your guess was incorrect :(',
+      play_again: 'Would you like to play again? Y/n '
     }[message]
   end
 
