@@ -5,13 +5,19 @@ require_relative 'display'
 
 # Game Class that holds logic for progressing a game of Hangman
 class Game
+  attr_reader :dictionary
+
   include Display
+
+  def initialize(dictionary)
+    @dictionary = dictionary
+  end
 
   def play_game
     display.welcome
     display.rules
     loop do
-      GameLoop.new.run_game({ secret_word: Dictionary.new.select_word })
+      GameLoop.new.run_game({ secret_word: dictionary.select_word })
       break unless play_again?
     end
   end
