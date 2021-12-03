@@ -4,7 +4,7 @@ require_relative 'display'
 
 # Class that runs a loop of the game
 class GameLoop
-  attr_accessor :guessed_letters
+  attr_accessor :guessed_letters, :incorrect_guesses
   attr_reader :secret_word, :encoded_word
 
   include Display
@@ -13,18 +13,17 @@ class GameLoop
     @secret_word = secret_word
     @encoded_word = encode_word
     @guessed_letters = []
+    @incorrect_guesses = 0
   end
 
   def run_game
-    incorrect_guesses = 0
     loop do
       puts display_secret_word(encoded_word)
       puts game_message(:query_letter)
       letter_guess = gets_user_input
       guessed_letters << letter_guess
-      reveal_letters(letter_guess)
-      incorrect_guesses += 1
-      break if incorrect_guesses == 12
+      analyze_round(letter_guess)
+      break if defeat? || win?
     end
   end
 
@@ -51,5 +50,23 @@ class GameLoop
 
   def valid_letter_input?(input)
     input.length == 1 && [*'a'..'z'].include?(input)
+  end
+
+  def analyze_round(guess)
+    if secret_word.include?(guess)
+      reveal_letters(guess)
+      win?
+    else
+      self.incorrect_guesses += 1
+      defeat?
+    end
+  end
+
+  def defeat?
+    incorrect_guesses == 6
+  end
+
+  def win?
+    encoded_word.join(' ') == secret_word
   end
 end
