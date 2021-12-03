@@ -2,6 +2,7 @@
 
 require_relative 'dictionary'
 require_relative 'display'
+require_relative 'game_loop'
 
 # Game Class that holds logic for progressing a game of Hangman
 class Game
@@ -14,10 +15,10 @@ class Game
   end
 
   def play_game
-    display.welcome
-    display.rules
+    puts welcome
+    puts rules
     loop do
-      GameLoop.new.run_game({ secret_word: dictionary.select_word })
+      GameLoop.new(secret_word: dictionary.select_word).run_game
       break unless play_again?
     end
   end
@@ -25,11 +26,11 @@ class Game
   private
 
   def play_again?
-    Display.game_message(:play_again)
+    puts game_message(:play_again)
     answer = gets.chomp.downcase
     answer == 'y'
   end
 end
 
 # method tests
-my_game = Game.new.game_loop
+my_game = Game.new(Dictionary.new).play_game
