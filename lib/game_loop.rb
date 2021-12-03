@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
 require_relative 'display'
 
 # Class that runs a loop of the game
@@ -20,6 +21,7 @@ class GameLoop
     loop do
       puts display_secret_word(encoded_word)
       puts game_message(:query_letter)
+      # binding.pry
       letter_guess = gets_user_input
       guessed_letters << letter_guess
       analyze_round(letter_guess)
@@ -68,6 +70,6 @@ class GameLoop
   end
 
   def win?
-    encoded_word.join(' ') == secret_word
+    encoded_word.join == secret_word
   end
 end
