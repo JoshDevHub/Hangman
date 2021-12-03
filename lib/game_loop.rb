@@ -13,7 +13,7 @@ class GameLoop
     @secret_word = secret_word
     @encoded_word = encode_word
     @guessed_letters = []
-    @incorrect_guesses = 0
+    @incorrect_guesses = 6
   end
 
   def run_game
@@ -57,13 +57,14 @@ class GameLoop
       reveal_letters(guess)
       win?
     else
-      self.incorrect_guesses += 1
+      self.incorrect_guesses -= 1
+      puts display_remaining_guesses(incorrect_guesses)
       defeat?
     end
   end
 
   def defeat?
-    incorrect_guesses == 6
+    incorrect_guesses.zero?
   end
 
   def win?

@@ -26,6 +26,10 @@ module Display
     }[message]
   end
 
+  def display_remaining_guesses(number)
+    "You have #{number} guesses remaining!"
+  end
+
   def display_secret_word(word)
     word.join(' ')
   end
