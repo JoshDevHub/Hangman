@@ -26,6 +26,14 @@ module Display
     }[message]
   end
 
+  def win_message(secret_word)
+    "You guessed all of the correct letters in #{secret_word}. Nice job!"
+  end
+
+  def lose_message(secret_word)
+    "You've lost the game. The secret word was #{secret_word}."
+  end
+
   def display_remaining_guesses(number)
     "You have #{number} guesses remaining!"
   end

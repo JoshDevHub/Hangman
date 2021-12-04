@@ -56,13 +56,22 @@ class GameLoop
 
   def analyze_round(guess)
     if secret_word.include?(guess)
-      reveal_letters(guess)
-      win?
+      correct_guess(guess)
     else
-      self.incorrect_guesses -= 1
-      puts display_remaining_guesses(incorrect_guesses)
-      defeat?
+      incorrect_guess
     end
+  end
+
+  def correct_guess(guess)
+    puts game_message(:correct_letter)
+    reveal_letters(guess)
+    puts win_message(secret_word) if win?
+  end
+
+  def incorrect_guess
+    self.incorrect_guesses -= 1
+    puts display_remaining_guesses(incorrect_guesses)
+    puts lose_message(secret_word) if defeat?
   end
 
   def defeat?
