@@ -4,9 +4,9 @@
 class Dictionary
   attr_reader :dictionary
 
-  def initialize
-    @dictionary = File.readlines('5desk.txt')
-    clean_dictionary
+  def initialize(file_input)
+    input = File.readlines(file_input)
+    @dictionary = clean_dictionary(input)
   end
 
   def select_word
@@ -16,19 +16,12 @@ class Dictionary
 
   private
 
-  def line_chomp
-    dictionary.map!(&:chomp)
-  end
-
-  def word_length_filter
-    dictionary.select! { |word| word.length.between?(5, 12) }
-  end
-
-  def clean_dictionary
-    line_chomp
-    word_length_filter
+  def clean_dictionary(word_list)
+    word_list.map(&:chomp).select do |word|
+      word.length.between?(5, 12) && word[0] == word[0].downcase
+    end
   end
 end
 
 # Test
-Dictionary.new.select_word
+# p Dictionary.new('5desk.txt').dictionary
