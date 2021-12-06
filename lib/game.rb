@@ -3,12 +3,14 @@
 require_relative 'dictionary'
 require_relative 'display'
 require_relative 'game_loop'
+require_relative 'user_input'
 
 # Game Class that holds logic for progressing a game of Hangman
 class Game
   attr_reader :dictionary
 
   include Display
+  include UserInput
 
   def initialize(dictionary)
     @dictionary = dictionary
@@ -23,11 +25,9 @@ class Game
     end
   end
 
-  private
-
   def play_again?
     puts game_message(:play_again)
-    answer = gets.chomp.downcase
+    answer = gets_yes_no_input
     answer == 'y'
   end
 end

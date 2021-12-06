@@ -3,6 +3,7 @@
 require 'pry-byebug'
 require 'yaml'
 require_relative 'display'
+require_relative 'user_input'
 
 # Class that runs a loop of the game
 class GameLoop
@@ -10,6 +11,7 @@ class GameLoop
   attr_reader :secret_word, :encoded_word, :incorrect_letters, :correct_letters
 
   include Display
+  include UserInput
 
   def initialize(secret_word:, incorrect_letters: [], correct_letters: [], incorrect_guesses: 6)
     @secret_word = secret_word
@@ -22,7 +24,7 @@ class GameLoop
   def run_game
     loop do
       beginning_round_messages
-      letter_guess = gets_user_input
+      letter_guess = gets_letter_guess(incorrect_letters + correct_letters)
       analyze_round(letter_guess)
       break if defeat? || win?
     end
@@ -48,22 +50,6 @@ class GameLoop
     encoded_word.map!.with_index do |element, index|
       letter == secret_word[index] ? letter : element
     end
-  end
-
-  def gets_user_input
-    input = gets.chomp.downcase
-    return input if valid_letter_input?(input)
-
-    until valid_letter_input?(input)
-      puts "Please only input one letter 'A' to 'Z'."
-      input = gets.chomp.downcase
-    end
-    input
-  end
-
-  def valid_letter_input?(input)
-    input.length == 1 && [*'a'..'z'].include?(input) &&
-      !(correct_letters + incorrect_letters).include?(input)
   end
 
   def analyze_round(guess)
@@ -112,11 +98,11 @@ class GameLoop
   end
 end
 
-my_game = GameLoop.new(secret_word: 'gamer',
-                       incorrect_letters: ['b, y'],
-                       correct_letters: ['g'],
-                       incorrect_guesses: 4)
-my_yaml = my_game.to_yaml
-ret_game = GameLoop.from_yaml(my_yaml)
+# my_game = GameLoop.new(secret_word: 'gamer',
+#                        incorrect_letters: ['b, y'],
+#                        correct_letters: ['g'],
+#                        incorrect_guesses: 4)
+# my_yaml = my_game.to_yaml
+# ret_game = GameLoop.from_yaml(my_yaml)
 
-p ret_game.encoded_word
+# p ret_game.encoded_word
