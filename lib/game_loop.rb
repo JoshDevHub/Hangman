@@ -10,12 +10,12 @@ class GameLoop
 
   include Display
 
-  def initialize(secret_word:)
+  def initialize(secret_word:, incorrect_letters: [], correct_letters: [], incorrect_guesses: 6)
     @secret_word = secret_word
     @encoded_word = encode_word
-    @correct_letters = []
-    @incorrect_letters = []
-    @incorrect_guesses = 6
+    @correct_letters = correct_letters
+    @incorrect_letters = incorrect_letters
+    @incorrect_guesses = incorrect_guesses
   end
 
   def run_game
