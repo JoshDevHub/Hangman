@@ -33,4 +33,4 @@ class Game
 end
 
 # method tests
-my_game = Game.new(Dictionary.new).play_game
+my_game = Game.new(Dictionary.new('5desk.txt')).play_game

@@ -34,6 +34,10 @@ module Display
     "You've lost the game. The secret word was #{secret_word}."
   end
 
+  def incorrect_letter_message(letters_list)
+    "Incorrect Letters: #{letters_list.join(' ')}"
+  end
+
   def display_remaining_guesses(number)
     "You have #{number} guesses remaining!"
   end

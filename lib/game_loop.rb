@@ -5,28 +5,32 @@ require_relative 'display'
 
 # Class that runs a loop of the game
 class GameLoop
-  attr_accessor :guessed_letters, :incorrect_guesses
-  attr_reader :secret_word, :encoded_word
+  attr_accessor :incorrect_guesses
+  attr_reader :secret_word, :encoded_word, :incorrect_letters, :correct_letters
 
   include Display
 
   def initialize(secret_word:)
     @secret_word = secret_word
     @encoded_word = encode_word
-    @guessed_letters = []
+    @correct_letters = []
+    @incorrect_letters = []
     @incorrect_guesses = 6
   end
 
   def run_game
     loop do
-      puts display_secret_word(encoded_word)
-      puts game_message(:query_letter)
-      # binding.pry
+      beginning_round_messages
       letter_guess = gets_user_input
-      guessed_letters << letter_guess
       analyze_round(letter_guess)
       break if defeat? || win?
     end
+  end
+
+  def beginning_round_messages
+    puts display_secret_word(encoded_word)
+    puts game_message(:query_letter)
+    puts incorrect_letter_message(incorrect_letters) unless incorrect_letters.empty?
   end
 
   def encode_word
@@ -51,26 +55,30 @@ class GameLoop
   end
 
   def valid_letter_input?(input)
-    input.length == 1 && [*'a'..'z'].include?(input)
+    input.length == 1 && [*'a'..'z'].include?(input) &&
+      !(correct_letters + incorrect_letters).include?(input)
   end
 
   def analyze_round(guess)
     if secret_word.include?(guess)
       correct_guess(guess)
     else
-      incorrect_guess
+      incorrect_guess(guess)
     end
   end
 
   def correct_guess(guess)
     puts game_message(:correct_letter)
     reveal_letters(guess)
+    correct_letters << guess
     puts win_message(secret_word) if win?
   end
 
-  def incorrect_guess
+  def incorrect_guess(guess)
+    puts game_message(:incorrect_letter)
     self.incorrect_guesses -= 1
     puts display_remaining_guesses(incorrect_guesses)
+    incorrect_letters << guess
     puts lose_message(secret_word) if defeat?
   end
 
