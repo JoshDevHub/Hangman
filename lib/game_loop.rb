@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pry-byebug'
+require 'yaml'
 require_relative 'display'
 
 # Class that runs a loop of the game
@@ -12,8 +13,8 @@ class GameLoop
 
   def initialize(secret_word:, incorrect_letters: [], correct_letters: [], incorrect_guesses: 6)
     @secret_word = secret_word
-    @encoded_word = encode_word
     @correct_letters = correct_letters
+    @encoded_word = encode_word
     @incorrect_letters = incorrect_letters
     @incorrect_guesses = incorrect_guesses
   end
@@ -34,7 +35,13 @@ class GameLoop
   end
 
   def encode_word
-    secret_word.length.times.map { '_' }
+    secret_word.split('').map do |letter|
+      if !correct_letters.nil? && correct_letters.include?(letter)
+        letter
+      else
+        '_'
+      end
+    end
   end
 
   def reveal_letters(letter)
@@ -89,4 +96,27 @@ class GameLoop
   def win?
     encoded_word.join == secret_word
   end
+
+  def to_yaml
+    object = {}
+    instance_variables.map { |var| object[var] = instance_variable_get(var) }
+    YAML.dump object
+  end
+
+  def self.from_yaml(string)
+    data = YAML.load string
+    self.new(secret_word: data[:@secret_word],
+             incorrect_letters: data[:@incorrect_letters],
+             correct_letters: data[:@correct_letters],
+             incorrect_guesses: data[:@incorrect_guesses])
+  end
 end
+
+my_game = GameLoop.new(secret_word: 'gamer',
+                       incorrect_letters: ['b, y'],
+                       correct_letters: ['g'],
+                       incorrect_guesses: 4)
+my_yaml = my_game.to_yaml
+ret_game = GameLoop.from_yaml(my_yaml)
+
+p ret_game.encoded_word
