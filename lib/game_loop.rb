@@ -96,13 +96,19 @@ class GameLoop
              correct_letters: data[:@correct_letters],
              incorrect_guesses: data[:@incorrect_guesses])
   end
+
+  def save_game(string)
+    Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
+    filename = 'saved_games/saved_hangman.yaml'
+    File.open(filename, 'w') do |file|
+      file.puts string
+    end
+  end
 end
 
-# my_game = GameLoop.new(secret_word: 'gamer',
-#                        incorrect_letters: ['b, y'],
-#                        correct_letters: ['g'],
-#                        incorrect_guesses: 4)
-# my_yaml = my_game.to_yaml
-# ret_game = GameLoop.from_yaml(my_yaml)
-
-# p ret_game.encoded_word
+my_game = GameLoop.new(secret_word: 'gamer',
+                       incorrect_letters: ['b, y'],
+                       correct_letters: ['g'],
+                       incorrect_guesses: 4)
+my_yaml = my_game.to_yaml
+my_game.save_game(my_yaml)
