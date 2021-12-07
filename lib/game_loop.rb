@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'pry-byebug'
-require 'yaml'
 require_relative 'display'
 require_relative 'user_input'
+require_relative 'save_game'
 
 # Class that runs a loop of the game
 class GameLoop
@@ -12,6 +12,7 @@ class GameLoop
 
   include Display
   include UserInput
+  include SaveGame
 
   def initialize(secret_word:, incorrect_letters: [], correct_letters: [], incorrect_guesses: 6)
     @secret_word = secret_word
@@ -81,28 +82,6 @@ class GameLoop
 
   def win?
     encoded_word.join == secret_word
-  end
-
-  def to_yaml
-    object = {}
-    instance_variables.map { |var| object[var] = instance_variable_get(var) }
-    YAML.dump object
-  end
-
-  def self.from_yaml(string)
-    data = YAML.load string
-    self.new(secret_word: data[:@secret_word],
-             incorrect_letters: data[:@incorrect_letters],
-             correct_letters: data[:@correct_letters],
-             incorrect_guesses: data[:@incorrect_guesses])
-  end
-
-  def save_game(string)
-    Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
-    filename = 'saved_games/saved_hangman.yaml'
-    File.open(filename, 'w') do |file|
-      file.puts string
-    end
   end
 end
 
