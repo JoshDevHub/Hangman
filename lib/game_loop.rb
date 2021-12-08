@@ -34,6 +34,7 @@ class GameLoop
   def beginning_round_messages
     puts display_secret_word(encoded_word)
     puts game_message(:query_letter)
+    puts game_message(:save_game)
     puts incorrect_letter_message(incorrect_letters) unless incorrect_letters.empty?
   end
 
@@ -84,10 +85,3 @@ class GameLoop
     encoded_word.join == secret_word
   end
 end
-
-my_game = GameLoop.new(secret_word: 'gamer',
-                       incorrect_letters: ['b, y'],
-                       correct_letters: ['g'],
-                       incorrect_guesses: 4)
-my_yaml = my_game.to_yaml
-my_game.save_game(my_yaml)

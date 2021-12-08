@@ -19,6 +19,7 @@ module Display
   def game_message(message)
     {
       introduction: "#{welcome}\n\n#{rules}",
+      save_game: "Type 'save' to save your game. You can return to it later.",
       query_letter: 'Choose a letter to guess ',
       correct_letter: 'Your guess was correct!',
       incorrect_letter: 'Your guess was incorrect :(',
