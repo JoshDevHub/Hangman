@@ -18,9 +18,9 @@ class Game
   end
 
   def play_game
-    puts welcome
+    puts welcome # TODO: Combine these display lines
     puts rules
-    if load_game?
+    if load_game? # FIXME: Bug with reusing loaded game if user plays again
       file = load_game('saved_games/saved_hangman.yaml')
       loaded_game = GameLoop.from_yaml(file)
     end
