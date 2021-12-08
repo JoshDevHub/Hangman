@@ -26,6 +26,10 @@ class GameLoop
     loop do
       beginning_round_messages
       letter_guess = gets_letter_guess(incorrect_letters + correct_letters)
+      if save_game?(letter_guess)
+        save_game
+        break
+      end
       analyze_round(letter_guess)
       break if defeat? || win?
     end

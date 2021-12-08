@@ -9,7 +9,7 @@ module SaveGame
     Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
     filename = 'saved_games/saved_hangman.yaml'
     File.open(filename, 'w') do |file|
-      file.puts yaml_object
+      file.puts yaml_string
     end
   end
 
