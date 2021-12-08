@@ -16,7 +16,7 @@ module UserInput
 
   def gets_letter_guess(letter_list)
     input = gets.chomp.downcase
-    return input if save_game? || letter?(input) && repeat_letter?(input, letter_list)
+    return input if save_game? || letter?(input) && no_repeat_letters?(input, letter_list)
 
     gets_letter_guess(letter_list)
   end
@@ -32,7 +32,7 @@ module UserInput
     false
   end
 
-  def repeat_letter?(input, letter_list)
+  def no_repeat_letters?(input, letter_list)
     return true unless letter_list.include?(input)
 
     puts "Eeek - You've already guessed that letter! Please pick a new one."
