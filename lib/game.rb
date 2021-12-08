@@ -11,6 +11,7 @@ class Game
 
   include Display
   include UserInput
+  include LoadGame
 
   def initialize(dictionary)
     @dictionary = dictionary
@@ -19,8 +20,13 @@ class Game
   def play_game
     puts welcome
     puts rules
+    if load_game?
+      file = load_game('saved_games/saved_hangman.yaml')
+      loaded_game = GameLoop.from_yaml(file)
+    end
     loop do
-      GameLoop.new(secret_word: dictionary.select_word).run_game
+      game_loop = loaded_game || GameLoop.new(secret_word: dictionary.select_word)
+      game_loop.run_game
       break unless play_again?
     end
   end
@@ -29,6 +35,11 @@ class Game
     puts game_message(:play_again)
     answer = gets_yes_no_input
     answer == 'y'
+  end
+
+  def load_game?
+    puts 'You can start a new game or load a previous one. Would you like to load a game? Y/n'
+    gets_yes_no_input == 'y'
   end
 end
 

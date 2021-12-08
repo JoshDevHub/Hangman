@@ -4,6 +4,7 @@ require 'pry-byebug'
 require_relative 'display'
 require_relative 'user_input'
 require_relative 'save_game'
+require_relative 'load_game'
 
 # Class that runs a loop of the game
 class GameLoop
@@ -13,6 +14,7 @@ class GameLoop
   include Display
   include UserInput
   include SaveGame
+  extend LoadGame
 
   def initialize(secret_word:, incorrect_letters: [], correct_letters: [], incorrect_guesses: 6)
     @secret_word = secret_word

@@ -13,10 +13,9 @@ module SaveGame
     end
   end
 
-  def load_game(file_path)
-    yaml_string = YAML.load File.read(file_path)
-    self.from_yaml(yaml_string)
-  end
+  # def load_game(file_path)
+  #   yaml_string = YAML.load File.read(file_path)
+  # end
 
   def to_yaml
     object = {}
@@ -24,11 +23,11 @@ module SaveGame
     YAML.dump object
   end
 
-  def self.from_yaml(string)
-    data = YAML.load string
-    self.new(secret_word: data[:@secret_word],
-             incorrect_letters: data[:@incorrect_letters],
-             correct_letters: data[:@correct_letters],
-             incorrect_guesses: data[:@incorrect_guesses])
-  end
+  # def self.from_yaml(string)
+  #   data = YAML.load string
+  #   new(secret_word: data[:@secret_word],
+  #       incorrect_letters: data[:@incorrect_letters],
+  #       correct_letters: data[:@correct_letters],
+  #       incorrect_guesses: data[:@incorrect_guesses])
+  # end
 end
