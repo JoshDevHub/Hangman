@@ -13,6 +13,7 @@ module Display
       word, the location of these letters within the word will be revealed to you.
       Use this information to help you guess the full word!
       You only have 6 incorrect guesses to spend. Pick your letters wisely!
+
     HEREDOC
   end
 
@@ -44,6 +45,6 @@ module Display
   end
 
   def display_secret_word(word)
-    word.join(' ')
+    "\n #{word.join(' ')}"
   end
 end
