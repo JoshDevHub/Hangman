@@ -10,7 +10,7 @@ module UserInput
     input = gets.chomp.downcase
     return input if %w[y n].include?(input)
 
-    puts "Please respond with 'y' or 'n' only."
+    puts error_message(:yes_no_error)
     gets_yes_no_input
   end
 
@@ -28,14 +28,14 @@ module UserInput
   def letter?(input)
     return true if [*'a'..'z'].include?(input)
 
-    puts "Please only guess using letters 'A'-'Z'"
+    puts error_message(:letter_error)
     false
   end
 
   def no_repeat_letters?(input, letter_list)
     return true unless letter_list.include?(input)
 
-    puts "Eeek - You've already guessed that letter! Please pick a new one."
+    puts error_message(:repeat_error)
     false
   end
 end

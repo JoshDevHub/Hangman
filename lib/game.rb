@@ -19,7 +19,7 @@ class Game
   end
 
   def play_game
-    introduction
+    puts game_message(:introduction)
     loaded_game = load_game_method
     loop do
       game_loop = loaded_game || GameLoop.new(secret_word: dictionary.select_word)
@@ -27,11 +27,6 @@ class Game
       loaded_game = nil
       break unless play_again?
     end
-  end
-
-  def introduction
-    puts welcome
-    puts rules
   end
 
   def load_game_method
@@ -44,16 +39,13 @@ class Game
   end
 
   def play_again?
-    puts game_message(:play_again)
+    puts query_message(:play_again_query)
     answer = gets_yes_no_input
     answer == 'y'
   end
 
   def load_game?
-    puts 'You can start a new game or load a previous one. Would you like to load a game? Y/n'
+    puts query_message(:load_game_query)
     gets_yes_no_input == 'y'
   end
 end
-
-# method tests
-# my_game = Game.new(Dictionary.new('5desk.txt')).play_game

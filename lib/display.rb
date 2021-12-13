@@ -21,10 +21,24 @@ module Display
     {
       introduction: "#{welcome}\n\n#{rules}",
       save_game: "Type 'save' to save your game. You can return to it later.",
-      query_letter: 'Choose a letter to guess ',
       correct_letter: 'Your guess was correct!',
-      incorrect_letter: 'Your guess was incorrect :(',
-      play_again: 'Would you like to play again? Y/n '
+      incorrect_letter: 'Your guess was incorrect :('
+    }[message]
+  end
+
+  def error_message(message)
+    {
+      yes_no_error: "Please respond with 'y' or 'n' only.",
+      letter_error: "Please only guess using letters 'A'-'Z'",
+      repeat_error: "Eeek - You've already guessed that letter! Please pick a new one."
+    }[message]
+  end
+
+  def query_message(message)
+    {
+      letter_query: 'Choose a letter to guess ',
+      play_again_query: 'Would you like to play again? Y/n ',
+      load_game_query: 'You can start a new game or load a previous one. Would you like to load a game? Y/n'
     }[message]
   end
 
