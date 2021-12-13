@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
 require_relative 'display'
 require_relative 'user_input'
 require_relative 'save_game'

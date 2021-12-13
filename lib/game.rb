@@ -19,8 +19,7 @@ class Game
   end
 
   def play_game
-    puts welcome # TODO: Combine these display lines
-    puts rules
+    introduction
     loaded_game = load_game_method
     loop do
       game_loop = loaded_game || GameLoop.new(secret_word: dictionary.select_word)
@@ -28,6 +27,11 @@ class Game
       loaded_game = nil
       break unless play_again?
     end
+  end
+
+  def introduction
+    puts welcome
+    puts rules
   end
 
   def load_game_method
