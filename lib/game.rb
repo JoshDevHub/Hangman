@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'dictionary'
 require_relative 'display'
 require_relative 'game_loop'
 require_relative 'user_input'
 
 # Game Class that holds logic for progressing a game of Hangman
 class Game
-  attr_reader :dictionary, :save_path
-
   include Display
   include UserInput
   include LoadGame
@@ -28,6 +25,10 @@ class Game
       break unless play_again?
     end
   end
+
+  private
+
+  attr_reader :dictionary, :save_path
 
   def load_game_method
     return unless File.exist?(save_path)

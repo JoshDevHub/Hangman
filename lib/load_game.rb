@@ -3,9 +3,8 @@
 # module for loading a saved game
 module LoadGame
   def load_game(file_path)
-    # binding.pry
     if File.exist?(file_path)
-      YAML.load File.read(file_path)
+      YAML.load File.read(file_path) # TODO: try save load
     else
       puts 'A saved game does not exist. Starting a new game...'
     end

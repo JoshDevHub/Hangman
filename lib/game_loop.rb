@@ -7,9 +7,6 @@ require_relative 'load_game'
 
 # Class that runs a loop of the game
 class GameLoop
-  attr_accessor :incorrect_guesses
-  attr_reader :secret_word, :encoded_word, :incorrect_letters, :correct_letters
-
   include Display
   include UserInput
   include SaveGame
@@ -35,6 +32,11 @@ class GameLoop
       break if defeat? || win?
     end
   end
+
+  private
+
+  attr_reader :secret_word, :encoded_word, :incorrect_letters, :correct_letters
+  attr_accessor :incorrect_guesses
 
   def beginning_round_messages
     puts display_secret_word(encoded_word)
