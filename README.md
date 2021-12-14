@@ -6,7 +6,7 @@ A command line game of Hangman built using Ruby.
 
 Pretty standard game of Hangman. You attempt to reveal a word by guessing one letter at a time. Correct letters are shown to you while incorrect guesses contribute to your error tally. Accumulate 6 errors and you ... hang? Kinda dark.
 
-Easiest way to play is to use the replit I have set up here: <!--FIXME: Add replit-->
+Easiest way to play is to use the replit I have set up here: [Repl](https://replit.com/@jmsmith1018/Hangman#README.md)
 
 ## Improvements
 
